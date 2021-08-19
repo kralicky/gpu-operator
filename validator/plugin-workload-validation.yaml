@@ -13,6 +13,7 @@ spec:
   readOnlyRootFilesystem: true
   restartPolicy: OnFailure
   serviceAccount: nvidia-operator-validator
+  runtimeClassName: nvidia
   initContainers:
   - name: plugin-validation
     image: "FILLED_BY_VALIDATOR"
