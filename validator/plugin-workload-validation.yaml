@@ -14,22 +14,24 @@ spec:
   restartPolicy: OnFailure
   serviceAccount: nvidia-operator-validator
   initContainers:
-  - name: plugin-validation
-    image: "FILLED_BY_VALIDATOR"
-    imagePullPolicy: IfNotPresent
-    command: ['sh', '-c']
-    args: ["vectorAdd"]
-    securityContext:
-      allowPrivilegeEscalation: false
-    resources:
-      limits:
-        "FILLED_BY_VALIDATOR": 1
+    - name: plugin-validation
+      image: "FILLED_BY_VALIDATOR"
+      imagePullPolicy: Always
+      command: ["sh", "-c"]
+      args: ["vectorAdd"]
+      env:
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "all"
+        - name: NVIDIA_DRIVER_CAPABILITIES
+          value: compute,utility
+      securityContext:
+        allowPrivilegeEscalation: false
   containers:
     - name: nvidia-device-plugin-validator
       image: "FILLED_BY_VALIDATOR"
-      imagePullPolicy: IfNotPresent
+      imagePullPolicy: Always
       # override command and args as validation is already done by initContainer
-      command: ['sh', '-c']
+      command: ["sh", "-c"]
       args: ["echo device-plugin workload validation is successful"]
       securityContext:
         allowPrivilegeEscalation: false

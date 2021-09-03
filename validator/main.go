@@ -31,7 +31,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	cli "github.com/urfave/cli/v2"
 	v1 "k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/resource"
 	meta_v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/fields"
 	"k8s.io/apimachinery/pkg/labels"
@@ -655,17 +654,6 @@ func (p *Plugin) runWorkload() error {
 	// update podSpec with node name so it will just run on current node
 	pod.Spec.NodeName = nodeNameFlag
 
-	resourceName, err := p.getGPUResourceName()
-	if err != nil {
-		return err
-	}
-
-	gpuResource := v1.ResourceList{
-		resourceName: resource.MustParse("1"),
-	}
-
-	pod.Spec.InitContainers[0].Resources.Limits = gpuResource
-	pod.Spec.InitContainers[0].Resources.Requests = gpuResource
 	opts := meta_v1.ListOptions{LabelSelector: labels.Set{"app": pluginValidatorLabelValue}.AsSelector().String(),
 		FieldSelector: fields.Set{"spec.nodeName": nodeNameFlag}.AsSelector().String()}
 
