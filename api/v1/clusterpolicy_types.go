@@ -128,7 +128,7 @@ type InitContainerSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// Image represents image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]*
 	Image string `json:"image,omitempty"`
 
 	// Version represents image tag(version)
@@ -257,7 +257,7 @@ type DriverManagerSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// Image represents Driver-Manager image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]*
 	Image string `json:"image,omitempty"`
 
 	// Version represents Driver-Manager image tag(version)
