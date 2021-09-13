@@ -128,7 +128,6 @@ type InitContainerSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// Image represents image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]*
 	Image string `json:"image,omitempty"`
 
 	// Version represents image tag(version)
@@ -165,7 +164,6 @@ type ValidatorSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// Validator image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
 	Image string `json:"image,omitempty"`
 
 	// Validator image tag
@@ -248,6 +246,7 @@ type CUDAValidatorSpec struct {
 type MIGSpec struct {
 	// Optional: MIGStrategy to apply for GFD and Device-Plugin
 	// +kubebuilder:validation:Enum=none;single;mixed
+	// +kubebuilder:default:=none
 	Strategy MIGStrategy `json:"strategy,omitempty"`
 }
 
@@ -296,7 +295,6 @@ type DriverSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// Driver image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
 	Image string `json:"image,omitempty"`
 
 	// Driver image tag
@@ -375,7 +373,7 @@ type ToolkitSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// Toolkit image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// Toolkit image tag
@@ -425,7 +423,7 @@ type DevicePluginSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// DevicePlugin image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// DevicePlugin image tag
@@ -475,7 +473,7 @@ type DCGMExporterSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// DCGM image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// DCGM image tag
@@ -546,7 +544,7 @@ type DCGMSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// DCGM image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// DCGM image tag
@@ -607,7 +605,7 @@ type NodeStatusExporterSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// node-status-exporter image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// node-status-exporter image tag
@@ -700,7 +698,7 @@ type GPUFeatureDiscoverySpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// GFD image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// GFD image tag
@@ -756,7 +754,7 @@ type MIGManagerSpec struct {
 	Repository string `json:"repository,omitempty"`
 
 	// mig-manager image name
-	// +kubebuilder:validation:Pattern=[a-zA-Z0-9\-]+
+	// +kubebuilder:validation:Optional
 	Image string `json:"image,omitempty"`
 
 	// mig-manager image tag
