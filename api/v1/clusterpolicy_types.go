@@ -855,6 +855,7 @@ type ClusterPolicyStatus struct {
 }
 
 // +kubebuilder:object:root=true
+// +kubebuilder:resource:scope=Cluster
 // +kubebuilder:subresource:status
 
 // ClusterPolicy is the Schema for the clusterpolicies API
