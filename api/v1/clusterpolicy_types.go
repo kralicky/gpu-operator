@@ -99,8 +99,11 @@ type OperatorSpec struct {
 	// +kubebuilder:default=docker
 	DefaultRuntime Runtime `json:"defaultRuntime"`
 	// +kubebuilder:default=nvidia
-	RuntimeClass  string            `json:"runtimeClass,omitempty"`
-	InitContainer InitContainerSpec `json:"initContainer,omitempty"`
+	RuntimeClass string `json:"runtimeClass,omitempty"`
+	// Optional: the handler to use for the specified RuntimeClass.
+	// If unset, it will use 'docker' if DefaultRuntime is 'docker', otherwise it will use the value of RuntimeClass.
+	RuntimeHandler string            `json:"runtimeHandler,omitempty"`
+	InitContainer  InitContainerSpec `json:"initContainer,omitempty"`
 }
 
 // PSPSpec describes configuration for PodSecurityPolicies to apply for all Pods

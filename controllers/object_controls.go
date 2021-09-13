@@ -1310,6 +1310,17 @@ func getRuntimeClass(config *gpuv1.ClusterPolicySpec) string {
 	return DefaultRuntimeClass
 }
 
+func getRuntimeHandler(config *gpuv1.ClusterPolicySpec) string {
+	if h := config.Operator.RuntimeHandler; h != "" {
+		return h
+	}
+	// Dockershim does not support custom RuntimeClass handlers; requires 'docker'
+	if config.Operator.DefaultRuntime == gpuv1.Docker {
+		return "docker"
+	}
+	return getRuntimeClass(config)
+}
+
 func setRuntimeClass(podSpec *corev1.PodSpec, runtime gpuv1.Runtime, runtimeClass string) {
 	if runtime == gpuv1.Containerd {
 		if runtimeClass == "" {
@@ -2070,7 +2081,7 @@ func RuntimeClass(n ClusterPolicyController) (gpuv1.State, error) {
 
 	// apply runtime class name as per ClusterPolicy
 	obj.Name = getRuntimeClass(&n.singleton.Spec)
-	obj.Handler = getRuntimeClass(&n.singleton.Spec)
+	obj.Handler = getRuntimeHandler(&n.singleton.Spec)
 
 	logger := n.rec.Log.WithValues("RuntimeClass", obj.Name)
 
