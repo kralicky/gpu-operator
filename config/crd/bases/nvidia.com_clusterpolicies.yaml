@@ -2512,8 +2512,6 @@ spec:
                   runtimeClass:
                     default: nvidia
                     type: string
-                required:
-                - defaultRuntime
                 type: object
               psp:
                 description: PSP defines spec for handling PodSecurityPolicies
@@ -3609,16 +3607,6 @@ spec:
                     description: Validator image tag
                     type: string
                 type: object
-            required:
-            - daemonsets
-            - dcgm
-            - dcgmExporter
-            - devicePlugin
-            - driver
-            - gfd
-            - nodeStatusExporter
-            - operator
-            - toolkit
             type: object
           status:
             description: ClusterPolicyStatus defines the observed state of ClusterPolicy
@@ -3630,8 +3618,6 @@ spec:
                 - ready
                 - notReady
                 type: string
-            required:
-            - state
             type: object
         type: object
     served: true
