@@ -36,23 +36,23 @@ type ClusterPolicySpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Operator component spec
-	Operator OperatorSpec `json:"operator"`
+	Operator OperatorSpec `json:"operator,omitempty"`
 	// Daemonset defines common configuration for all Daemonsets
-	Daemonsets DaemonsetsSpec `json:"daemonsets"`
+	Daemonsets DaemonsetsSpec `json:"daemonsets,omitempty"`
 	// Driver component spec
-	Driver DriverSpec `json:"driver"`
+	Driver DriverSpec `json:"driver,omitempty"`
 	// Toolkit component spec
-	Toolkit ToolkitSpec `json:"toolkit"`
+	Toolkit ToolkitSpec `json:"toolkit,omitempty"`
 	// DevicePlugin component spec
-	DevicePlugin DevicePluginSpec `json:"devicePlugin"`
+	DevicePlugin DevicePluginSpec `json:"devicePlugin,omitempty"`
 	// DCGMExporter spec
-	DCGMExporter DCGMExporterSpec `json:"dcgmExporter"`
+	DCGMExporter DCGMExporterSpec `json:"dcgmExporter,omitempty"`
 	// DCGM component spec
-	DCGM DCGMSpec `json:"dcgm"`
+	DCGM DCGMSpec `json:"dcgm,omitempty"`
 	// NodeStatusExporter spec
-	NodeStatusExporter NodeStatusExporterSpec `json:"nodeStatusExporter"`
+	NodeStatusExporter NodeStatusExporterSpec `json:"nodeStatusExporter,omitempty"`
 	// GPUFeatureDiscovery spec
-	GPUFeatureDiscovery GPUFeatureDiscoverySpec `json:"gfd"`
+	GPUFeatureDiscovery GPUFeatureDiscoverySpec `json:"gfd,omitempty"`
 	// MIG spec
 	MIG MIGSpec `json:"mig,omitempty"`
 	// MIGManager for configuration to deploy MIG Manager
@@ -96,8 +96,9 @@ func (r Runtime) String() string {
 // OperatorSpec describes configuration options for the operator
 type OperatorSpec struct {
 	// +kubebuilder:validation:Enum=docker;crio;containerd
+	// +kubebuilder:validation:Optional
 	// +kubebuilder:default=docker
-	DefaultRuntime Runtime `json:"defaultRuntime"`
+	DefaultRuntime Runtime `json:"defaultRuntime,omitempty"`
 	// +kubebuilder:default=nvidia
 	RuntimeClass string `json:"runtimeClass,omitempty"`
 	// Optional: the handler to use for the specified RuntimeClass.
@@ -854,7 +855,7 @@ const (
 type ClusterPolicyStatus struct {
 	// +kubebuilder:validation:Enum=ignored;ready;notReady
 	// State indicates status of ClusterPolicy
-	State State `json:"state"`
+	State State `json:"state,omitempty"`
 }
 
 // +kubebuilder:object:root=true
