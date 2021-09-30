@@ -109,7 +109,10 @@ func addState(n *ClusterPolicyController, path string) error {
 
 // OpenshiftVersion fetches OCP version
 func OpenshiftVersion() (string, error) {
-	cfg := config.GetConfigOrDie()
+	cfg, err := config.GetConfig()
+	if err != nil {
+		return "", err
+	}
 	client, err := configv1.NewForConfig(cfg)
 	if err != nil {
 		return "", err
@@ -137,7 +140,10 @@ func OpenshiftVersion() (string, error) {
 
 // GetClusterWideProxy returns cluster wide proxy object setup in OCP
 func GetClusterWideProxy() (*apiconfigv1.Proxy, error) {
-	cfg := config.GetConfigOrDie()
+	cfg, err := config.GetConfig()
+	if err != nil {
+		return nil, err
+	}
 	client, err := configv1.NewForConfig(cfg)
 	if err != nil {
 		return nil, err
@@ -381,6 +387,11 @@ func (n *ClusterPolicyController) getRuntime() error {
 }
 
 func (n *ClusterPolicyController) init(reconciler *ClusterPolicyReconciler, clusterPolicy *gpuv1.ClusterPolicy) error {
+	version, err := OpenshiftVersion()
+	if err != nil && !errors.IsNotFound(err) {
+		reconciler.Log.Info("No openshift verion info available")
+	}
+	n.openshift = version
 	n.singleton = clusterPolicy
 
 	n.rec = reconciler
@@ -396,12 +407,6 @@ func (n *ClusterPolicyController) init(reconciler *ClusterPolicyReconciler, clus
 
 			os.Exit(1)
 		}
-
-		version, err := OpenshiftVersion()
-		if err != nil && !errors.IsNotFound(err) {
-			return err
-		}
-		n.openshift = version
 
 		promv1.AddToScheme(reconciler.Scheme)
 		secv1.AddToScheme(reconciler.Scheme)
