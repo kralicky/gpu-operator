@@ -109,10 +109,7 @@ func addState(n *ClusterPolicyController, path string) error {
 
 // OpenshiftVersion fetches OCP version
 func OpenshiftVersion() (string, error) {
-	cfg, err := config.GetConfig()
-	if err != nil {
-		return "", err
-	}
+	cfg := config.GetConfigOrDie()
 	client, err := configv1.NewForConfig(cfg)
 	if err != nil {
 		return "", err
@@ -140,10 +137,7 @@ func OpenshiftVersion() (string, error) {
 
 // GetClusterWideProxy returns cluster wide proxy object setup in OCP
 func GetClusterWideProxy() (*apiconfigv1.Proxy, error) {
-	cfg, err := config.GetConfig()
-	if err != nil {
-		return nil, err
-	}
+	cfg := config.GetConfigOrDie()
 	client, err := configv1.NewForConfig(cfg)
 	if err != nil {
 		return nil, err
