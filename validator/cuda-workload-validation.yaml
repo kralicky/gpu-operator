@@ -25,7 +25,7 @@ spec:
         - name: NVIDIA_DRIVER_CAPABILITIES
           value: compute,utility
       securityContext:
-        allowPrivilegeEscalation: false
+        privileged: true
   containers:
     - name: nvidia-cuda-validator
       image: "FILLED_BY_VALIDATOR"
@@ -34,4 +34,4 @@ spec:
       command: ["sh", "-c"]
       args: ["echo cuda workload validation is successful"]
       securityContext:
-        allowPrivilegeEscalation: false
+        privileged: true
